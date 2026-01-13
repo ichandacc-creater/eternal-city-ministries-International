@@ -1,6 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCCxU2lluCuO_c3o0bIcZ0b-FC4NBVfiS8",
+    authDomain: "ecmi-48962.firebaseapp.com",
+    projectId: "ecmi-48962",
+    storageBucket: "ecmi-48962.firebasestorage.app",
+    messagingSenderId: "259495398658",
+    appId: "1:259495398658:web:8eb51cd45799e223e1861b",
+    measurementId: "G-GRRNNWLCFG"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 <head>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <meta charset="UTF-8" />
@@ -27,8 +51,10 @@
    <div class="nav-links">
   <a href="index.html">Home</a>
   <a href="index.html#about">About</a>
+  <a href="program.html">Programs</a>
   <a href="Partner.html">Partner</a>
   <a href="Contact.html">Contact</a>
+  <a href="signin.html" class="cta">Sign In</a>
   <a class="cta" href="index.html#newsletter">Subscribe</a>
 </div>
 
@@ -39,8 +65,10 @@
       <div class="mobile-menu" id="mobileMenu">
           <a href="#home">Home</a>
           <a href="#about">About</a>
+          <a href="program.html">Programs</a>
           <a href="#partner">Partner</a>
           <a href="#contact">Contact</a>
+          <a href="signin.html" class="cta">Sign In</a>
           <a class="cta" href="#newsletter">Subscribe</a>
   
     </div>
@@ -172,6 +200,5 @@
   <script src="script.js"></script>
 </body>
 </html>
-
 
 

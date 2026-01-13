@@ -1,0 +1,241 @@
+<!-- ===== AUTHENTICATION INTEGRATION EXAMPLES ===== -->
+
+<!-- 
+  This file contains code examples for integrating authentication 
+  into your existing pages (index.html, about.html, etc.)
+-->
+
+<!-- ===== EXAMPLE 1: Add to your <head> section ===== -->
+<!--
+  No additional tags needed - just import the module in your script
+-->
+
+<!-- ===== EXAMPLE 2: Update Navigation for Auth ===== -->
+<!--
+  Replace your existing nav links with this:
+-->
+
+<nav class="nav">
+  <div class="brand">
+    <img src="assets/logo.png" alt="Logo" class="logo-img">
+    <div>Eternal City Ministries International</div>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="Partner.html">Partner</a>
+    <a href="Contact.html">Contact</a>
+    
+    <!-- Show when NOT logged in -->
+    <a href="signin.html" class="cta" data-auth="signin">Sign In</a>
+    
+    <!-- Show when logged in -->
+    <div class="user-menu" data-auth="user" style="display: none;">
+      <a href="profile.html">My Profile</a>
+      <button id="logoutBtn" class="cta">Log Out</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== EXAMPLE 3: Add to your main script ===== -->
+<script type="module">
+  import { setupAuthUI } from './authContext.js';
+  
+  // Initialize authentication UI on page load
+  setupAuthUI();
+  
+  // Rest of your script...
+</script>
+
+<!-- ===== EXAMPLE 4: CSS for user menu (add to styles.css) ===== -->
+<style>
+  .user-menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .user-menu a {
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .user-menu a:hover {
+    color: var(--primary);
+  }
+  
+  .user-menu button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+</style>
+
+<!-- ===== EXAMPLE 5: Protected Page (require authentication) ===== -->
+<script type="module">
+  import { requireAuth, setupAuthUI } from './authContext.js';
+  
+  // This will redirect to signin if user is not logged in
+  const user = await requireAuth();
+  
+  // This code only runs if user is authenticated
+  setupAuthUI();
+  console.log('User:', user.email);
+</script>
+
+<!-- ===== EXAMPLE 6: Display User Info ===== -->
+<script type="module">
+  import { setupAuthUI, getCurrentUserEmail } from './authContext.js';
+  
+  setupAuthUI();
+  
+  // Display user email in a span
+  const userEmailElement = document.getElementById('userEmail');
+  const email = getCurrentUserEmail();
+  
+  if (email) {
+    userEmailElement.textContent = email;
+  }
+</script>
+
+<!-- ===== EXAMPLE 7: Custom User Profile Display ===== -->
+<script type="module">
+  import { setupAuthUI, requireAuth, getUserProfile } from './auth.js';
+  import { initAuthState } from './authContext.js';
+  
+  // Ensure user is logged in
+  const user = await requireAuth();
+  
+  // Get full profile from Firestore
+  const profileResult = await getUserProfile(user.uid);
+  
+  if (profileResult.success) {
+    const profile = profileResult.data;
+    document.getElementById('userName').textContent = profile.firstName + ' ' + profile.surname;
+    document.getElementById('userEmail').textContent = profile.email;
+    document.getElementById('userCountry').textContent = profile.country;
+    document.getElementById('userPhone').textContent = profile.phone;
+  }
+</script>
+
+<!-- ===== EXAMPLE 8: Create Profile Page ===== -->
+<!--
+  Create a new file: profile.html
+  Add this structure:
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Eternal City Ministries</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand">
+        <img src="assets/logo.png" alt="Logo" class="logo-img">
+        <div>Eternal City Ministries International</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="profile.html">My Profile</a>
+        <button id="logoutBtn" class="cta">Log Out</button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="container" style="padding: 70px 20px;">
+    <h2 class="section-title">My Profile</h2>
+    
+    <div class="profile-card">
+      <div class="profile-field">
+        <label>Name:</label>
+        <p id="profileName">Loading...</p>
+      </div>
+      <div class="profile-field">
+        <label>Email:</label>
+        <p id="profileEmail">Loading...</p>
+      </div>
+      <div class="profile-field">
+        <label>Country:</label>
+        <p id="profileCountry">Loading...</p>
+      </div>
+      <div class="profile-field">
+        <label>Phone:</label>
+        <p id="profilePhone">Loading...</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="profile.html">My Profile</a>
+      </div>
+      <p class="footer-copy">© <span id="year"></span> Eternal City Ministries International</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { setupAuthUI, requireAuth } from './authContext.js';
+    import { getUserProfile } from './auth.js';
+    
+    // Require authentication
+    const user = await requireAuth();
+    setupAuthUI();
+    
+    // Load and display profile
+    const profileResult = await getUserProfile(user.uid);
+    
+    if (profileResult.success) {
+      const profile = profileResult.data;
+      document.getElementById('profileName').textContent = profile.firstName + ' ' + profile.surname;
+      document.getElementById('profileEmail').textContent = profile.email;
+      document.getElementById('profileCountry').textContent = profile.country;
+      document.getElementById('profilePhone').textContent = profile.phone;
+    }
+    
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
+<!-- ===== EXAMPLE 9: Check Auth in Console ===== -->
+<!--
+  Open browser developer console and test:
+  
+  import { getCurrentUser, getCurrentUserEmail } from './auth.js';
+  
+  const user = getCurrentUser();
+  console.log('Current user:', user);
+  console.log('Email:', getCurrentUserEmail());
+-->
+
+<!-- ===== EXAMPLE 10: Handle Auth Errors ===== -->
+<script type="module">
+  import { signIn } from './auth.js';
+  
+  const result = await signIn('user@example.com', 'password');
+  
+  if (result.success) {
+    console.log('Login successful!');
+  } else {
+    // Display error to user
+    const errorMessages = {
+      'auth/invalid-email': 'Invalid email address',
+      'auth/user-not-found': 'User account not found',
+      'auth/wrong-password': 'Incorrect password',
+      'auth/weak-password': 'Password must be at least 6 characters',
+      'auth/email-already-in-use': 'Email already registered'
+    };
+    
+    const message = errorMessages[result.error] || result.error;
+    console.error(message);
+  }
+</script>

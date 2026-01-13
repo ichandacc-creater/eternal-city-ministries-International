@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sign In - Eternal City Ministries</title>
   <link rel="stylesheet" href="styles.css" />
-  <!-- Font Awesome (optional for icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -19,36 +18,56 @@
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="partner.html">Partner</a>
-        <a href="contact.html">Contact</a>
+        <a href="Partner.html">Partner</a>
+        <a href="Contact.html">Contact</a>
         <a href="signin.html" class="cta">Sign In</a>
       </div>
     </nav>
   </header>
 
-  <!-- ================= AUTH CARD ================= -->
-  <section class="container" style="padding:70px 20px;">
+  <!-- ================= AUTH SECTION ================= -->
+  <section class="container auth-section">
     <h2 class="section-title">Account Access</h2>
     <p class="section-sub">Sign in or create an account to manage your ministry profile.</p>
 
     <div class="signin-card">
-      <!-- Tabs -->
+      <!-- ===== Tab Navigation ===== -->
       <div class="auth-tabs">
-        <button class="auth-tab active" data-tab="signin">Sign In</button>
-        <button class="auth-tab" data-tab="signup">Create Account</button>
+        <button class="auth-tab active" data-tab="signin">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+        <button class="auth-tab" data-tab="signup">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
       </div>
 
       <!-- ===== Sign In Form ===== -->
-      <form id="signinForm" class="auth-form">
-        <label>Email</label>
-        <input type="email" id="signinEmail" placeholder="Enter your email" required>
+      <form id="signinForm" class="auth-form active-form">
+        <div class="form-group">
+          <label for="signinEmail">Email Address</label>
+          <input 
+            type="email" 
+            id="signinEmail" 
+            placeholder="Enter your email" 
+            required
+            autocomplete="email"
+          >
+        </div>
 
-        <label>Password</label>
-        <input type="password" id="signinPassword" placeholder="Enter your password" required>
+        <div class="form-group">
+          <label for="signinPassword">Password</label>
+          <input 
+            type="password" 
+            id="signinPassword" 
+            placeholder="Enter your password" 
+            required
+            autocomplete="current-password"
+          >
+        </div>
 
-        <button type="submit" class="cta" id="signinBtn">Sign In</button>
+        <button type="submit" class="cta btn-block" id="signinBtn">Sign In</button>
 
-        <p class="signin-note">
+        <p class="auth-link">
           <a href="#" id="forgotPassword">Forgot Password?</a>
         </p>
 
@@ -56,38 +75,114 @@
       </form>
 
       <!-- ===== Create Account Form ===== -->
-      <form id="signupForm" class="auth-form" style="display:none;">
-        <label>First Name</label>
-        <input type="text" id="firstName" placeholder="First Name" required>
+      <form id="signupForm" class="auth-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input 
+              type="text" 
+              id="firstName" 
+              placeholder="First Name" 
+              required
+            >
+          </div>
+          <div class="form-group">
+            <label for="surname">Surname</label>
+            <input 
+              type="text" 
+              id="surname" 
+              placeholder="Surname" 
+              required
+            >
+          </div>
+        </div>
 
-        <label>Surname</label>
-        <input type="text" id="surname" placeholder="Surname" required>
+        <div class="form-group">
+          <label for="signupEmail">Email Address</label>
+          <input 
+            type="email" 
+            id="signupEmail" 
+            placeholder="Email Address" 
+            required
+            autocomplete="email"
+          >
+        </div>
 
-        <label>Email</label>
-        <input type="email" id="signupEmail" placeholder="Email Address" required>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input 
+            type="text" 
+            id="country" 
+            placeholder="Country" 
+            required
+          >
+        </div>
 
-        <label>Country</label>
-        <input type="text" id="country" placeholder="Country" required>
+        <div class="form-group">
+          <label for="address">Residential Address</label>
+          <input 
+            type="text" 
+            id="address" 
+            placeholder="Street Address" 
+            required
+          >
+        </div>
 
-        <label>Residential Address</label>
-        <input type="text" id="address" placeholder="Residential Address" required>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="province">Province/State</label>
+            <input 
+              type="text" 
+              id="province" 
+              placeholder="Province/State" 
+              required
+            >
+          </div>
+          <div class="form-group">
+            <label for="district">District</label>
+            <input 
+              type="text" 
+              id="district" 
+              placeholder="District" 
+              required
+            >
+          </div>
+        </div>
 
-        <label>Province/State</label>
-        <input type="text" id="province" placeholder="Province/State" required>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="postalCode">Postal Code</label>
+            <input 
+              type="text" 
+              id="postalCode" 
+              placeholder="Postal Code" 
+              required
+            >
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              placeholder="+1 (555) 000-0000" 
+              required
+            >
+          </div>
+        </div>
 
-        <label>District</label>
-        <input type="text" id="district" placeholder="District" required>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input 
+            type="password" 
+            id="signupPassword" 
+            placeholder="Choose a strong password (min. 6 characters)" 
+            required
+            autocomplete="new-password"
+            minlength="6"
+          >
+        </div>
 
-        <label>Postal Code</label>
-        <input type="text" id="postalCode" placeholder="Postal Code" required>
-
-        <label>Phone Number</label>
-        <input type="tel" id="phone" placeholder="Phone Number" required>
-
-        <label>Password</label>
-        <input type="password" id="signupPassword" placeholder="Choose a strong password" required>
-
-        <button type="submit" class="cta" id="signupBtn">Create Account</button>
+        <button type="submit" class="cta btn-block" id="signupBtn">Create Account</button>
 
         <div class="auth-message" id="signupMessage"></div>
       </form>
@@ -100,129 +195,161 @@
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="partner.html">Partner</a>
-        <a href="contact.html">Contact</a>
+        <a href="Partner.html">Partner</a>
+        <a href="Contact.html">Contact</a>
         <a href="signin.html">Sign In</a>
       </div>
       <p class="footer-copy">© <span id="year"></span> Eternal City Ministries International</p>
     </div>
   </footer>
 
-  <!-- ================= FIREBASE SDK ================= -->
+  <!-- ===== Authentication Script ===== -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import {
-      getAuth,
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword,
-      sendPasswordResetEmail
-    } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+      signIn,
+      signUp,
+      resetPassword,
+      onUserAuthStateChanged,
+      getCurrentUser
+    } from "./auth.js";
 
-    // ===== Firebase Config (ECMI Project) =====
-    const firebaseConfig = {
-      apiKey: "AIzaSyCCxU2lluCuO_c3o0bIcZ0b-FC4NBVfiS8",
-      authDomain: "ecmi-48962.firebaseapp.com",
-      projectId: "ecmi-48962",
-      storageBucket: "ecmi-48962.appspot.com",   // ✅ corrected
-      messagingSenderId: "259495398658",
-      appId: "1:259495398658:web:a7a6811ad4413e3ae1861b",
-      measurementId: "G-YWMWV6VMQ9"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // ===== Footer Year =====
+    // ===== Set current year in footer =====
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // ===== Tab Switching =====
+    const tabs = document.querySelectorAll('.auth-tab');
     const signinForm = document.getElementById('signinForm');
     const signupForm = document.getElementById('signupForm');
-    const tabs = document.querySelectorAll('.auth-tab');
 
     tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Update active tab
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
+
+        // Show/hide forms
         if (tab.dataset.tab === 'signin') {
-          signinForm.style.display = 'flex';
-          signupForm.style.display = 'none';
+          signinForm.classList.add('active-form');
+          signupForm.classList.remove('active-form');
         } else {
-          signinForm.style.display = 'none';
-          signupForm.style.display = 'flex';
+          signinForm.classList.remove('active-form');
+          signupForm.classList.add('active-form');
         }
       });
     });
 
-    // ===== Sign In =====
-    const signinMessage = document.getElementById('signinMessage');
+    // ===== Sign In Handler =====
     signinForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('signinEmail').value;
+
+      const email = document.getElementById('signinEmail').value.trim();
       const password = document.getElementById('signinPassword').value;
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        signinMessage.textContent = "Signed in successfully!";
-        signinMessage.className = "auth-message success";
-        window.location.href = "index.html"; // redirect after login
-          } catch (err) {
-            signupMessage.textContent = err.message;
-            signupMessage.classList.add('error');
-          }
-        });
-    
-        // ===== Forgot Password =====
-        document.getElementById('forgotPassword').addEventListener('click', async (e) => {
-          e.preventDefault();
-          const email = document.getElementById('signinEmail').value;
-          if (!email) {
-            alert('Please enter your email first.');
-            return;
-          }
-          try {
-            await sendPasswordResetEmail(auth, email);
-            alert('Password reset email sent!');
-          } catch (err) {
-            alert('Error: ' + err.message);
-          }
-        });
-      </script>
-        signinMessage.textContent = err.message;
-        signinMessage.className = "auth-message error";
+      const signinMessage = document.getElementById('signinMessage');
+
+      // Clear previous message
+      signinMessage.textContent = '';
+      signinMessage.className = 'auth-message';
+
+      // Show loading state
+      const signinBtn = document.getElementById('signinBtn');
+      const originalText = signinBtn.textContent;
+      signinBtn.textContent = 'Signing In...';
+      signinBtn.disabled = true;
+
+      // Attempt sign in
+      const result = await signIn(email, password);
+
+      if (result.success) {
+        signinMessage.textContent = '✓ Signed in successfully! Redirecting...';
+        signinMessage.className = 'auth-message success';
+        signinForm.reset();
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1500);
+      } else {
+        signinMessage.textContent = '✗ ' + result.error;
+        signinMessage.className = 'auth-message error';
+        signinBtn.textContent = originalText;
+        signinBtn.disabled = false;
       }
     });
 
-    // ===== Create Account =====
-    const signupMessage = document.getElementById('signupMessage');
+    // ===== Forgot Password Handler =====
+    document.getElementById('forgotPassword').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signinEmail').value.trim();
+
+      if (!email) {
+        alert('Please enter your email address first.');
+        return;
+      }
+
+      const result = await resetPassword(email);
+      if (result.success) {
+        alert('✓ Password reset email sent! Check your inbox.');
+      } else {
+        alert('✗ Error: ' + result.error);
+      }
+    });
+
+    // ===== Sign Up Handler =====
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Collect form data
+      const userData = {
+        firstName: document.getElementById('firstName').value.trim(),
+        surname: document.getElementById('surname').value.trim(),
+        email: document.getElementById('signupEmail').value.trim(),
+        country: document.getElementById('country').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        province: document.getElementById('province').value.trim(),
+        district: document.getElementById('district').value.trim(),
+        postalCode: document.getElementById('postalCode').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        password: document.getElementById('signupPassword').value
+      };
+
+      const signupMessage = document.getElementById('signupMessage');
+
+      // Clear previous message
       signupMessage.textContent = '';
       signupMessage.className = 'auth-message';
 
-      const firstName = document.getElementById('firstName').value.trim();
-      const surname = document.getElementById('surname').value.trim();
-      const email = document.getElementById('signupEmail').value.trim();
-      const country = document.getElementById('country').value.trim();
-      const address = document.getElementById('address').value.trim();
-      const province = document.getElementById('province').value.trim();
-      const district = document.getElementById('district').value.trim();
-      const postalCode = document.getElementById('postalCode').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const password = document.getElementById('signupPassword').value;
+      // Show loading state
+      const signupBtn = document.getElementById('signupBtn');
+      const originalText = signupBtn.textContent;
+      signupBtn.textContent = 'Creating Account...';
+      signupBtn.disabled = true;
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+      // Attempt sign up
+      const result = await signUp(userData);
 
-        // TODO: Save extra info in Firestore or Realtime Database
-        // Example (if using Firestore):
-        // import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-        // const db = getFirestore(app);
-        // await setDoc(doc(db, "users", user.uid), {
-        //   firstName, surname, email, country, address, province, district, postalCode, phone
-        // });
+      if (result.success) {
+        signupMessage.textContent = '✓ Account created successfully! Redirecting...';
+        signupMessage.className = 'auth-message success';
+        signupForm.reset();
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1500);
+      } else {
+        signupMessage.textContent = '✗ ' + result.error;
+        signupMessage.className = 'auth-message error';
+        signupBtn.textContent = originalText;
+        signupBtn.disabled = false;
+      }
+    });
 
-        signupMessage.textContent = "Account created successfully!";
-        signupMessage.classList.add('success');
-      } catch (err) {
+    // ===== Check if user already logged in =====
+    onUserAuthStateChanged((user) => {
+      if (user) {
+        // User is already logged in, redirect to home
+        console.log('User already logged in:', user.email);
+        // Optionally redirect or show a message
+      }
+    });
+  </script>
+</body>
+</html>
