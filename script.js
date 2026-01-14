@@ -3,6 +3,205 @@
 
 // ===== Mobile Menu Toggle (safe) =====
 const hamburger = document.getElementById('hamburger');
+
+// ===== Modal (Sign In / Sign Up / Contact) =====
+const modalOverlay = document.getElementById('modalOverlay');
+const modalBody = document.getElementById('modalBody');
+const modalClose = document.getElementById('modalClose');
+
+function openModal(contentHtml) {
+  if (!modalOverlay || !modalBody) return;
+  modalBody.innerHTML = contentHtml;
+  modalOverlay.classList.add('active');
+  modalOverlay.setAttribute('aria-hidden', 'false');
+}
+
+function closeModal() {
+  if (!modalOverlay) return;
+  modalOverlay.classList.remove('active');
+  modalOverlay.setAttribute('aria-hidden', 'true');
+  modalBody.innerHTML = '';
+}
+
+if (modalClose) modalClose.addEventListener('click', closeModal);
+if (modalOverlay) modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+function signInHtml() {
+  return `
+    <div class="modal-content">
+      <h3 id="modalTitle">Sign In</h3>
+      <p>Welcome back — sign in to access member resources.</p>
+      <form id="signInForm" class="auth-form active-form">
+        <div class="form-group"><label for="si-email">Email</label><input id="si-email" name="email" type="email" placeholder="you@example.com" required></div>
+        <div class="form-group"><label for="si-pass">Password</label><input id="si-pass" name="password" type="password" placeholder="Password" required></div>
+        <button class="btn-block" type="submit">Sign In</button>
+        <div class="auth-link">Don't have an account? <a href="#" id="toSignUp">Create one</a></div>
+      </form>
+    </div>
+  `;
+}
+
+function signUpHtml() {
+  return `
+    <div class="modal-content">
+      <h3 id="modalTitle">Sign Up</h3>
+      <p>Create a free account to partner and receive updates.</p>
+      <form id="signUpForm" class="auth-form active-form">
+        <div class="form-row"><div class="form-group"><label for="su-first">First</label><input id="su-first" name="first" required></div><div class="form-group"><label for="su-last">Last</label><input id="su-last" name="last"></div></div>
+        <div class="form-group"><label for="su-email">Email</label><input id="su-email" name="email" type="email" required></div>
+        <div class="form-group"><label for="su-pass">Password</label><input id="su-pass" name="password" type="password" required></div>
+        <button class="btn-block" type="submit">Create Account</button>
+        <div class="auth-link">Already a member? <a href="#" id="toSignIn">Sign In</a></div>
+      </form>
+    </div>
+  `;
+}
+
+function contactHtml() {
+  return `
+    <div class="modal-content">
+      <h3 id="modalTitle">Contact Us</h3>
+      <p>Send us a message and we'll get back to you.</p>
+      <form id="contactForm" class="auth-form active-form">
+        <div class="form-group"><label for="ct-name">Name</label><input id="ct-name" name="name" required></div>
+        <div class="form-group"><label for="ct-email">Email</label><input id="ct-email" name="email" type="email" required></div>
+        <div class="form-group"><label for="ct-msg">Message</label><textarea id="ct-msg" name="message" rows="4" required></textarea></div>
+        <button class="btn-block" type="submit">Send Message</button>
+      </form>
+    </div>
+  `;
+}
+
+// Attach openers
+const openSignIn = document.getElementById('openSignIn');
+const openSignInMobile = document.getElementById('openSignInMobile');
+const openSignUp = document.getElementById('openSignUp');
+
+if (openSignIn) openSignIn.addEventListener('click', (e) => { e.preventDefault(); openModal(signInHtml()); attachModalFormHandlers(); });
+if (openSignInMobile) openSignInMobile.addEventListener('click', (e) => { e.preventDefault(); openModal(signInHtml()); attachModalFormHandlers(); });
+if (openSignUp) openSignUp.addEventListener('click', (e) => { e.preventDefault(); openModal(signUpHtml()); attachModalFormHandlers(); });
+
+function attachModalFormHandlers() {
+  // wire delegated links inside modal
+  const toSignUp = document.getElementById('toSignUp');
+  const toSignIn = document.getElementById('toSignIn');
+  if (toSignUp) toSignUp.addEventListener('click', (ev) => { ev.preventDefault(); openModal(signUpHtml()); attachModalFormHandlers(); });
+  if (toSignIn) toSignIn.addEventListener('click', (ev) => { ev.preventDefault(); openModal(signInHtml()); attachModalFormHandlers(); });
+
+  const signInForm = document.getElementById('signInForm');
+  if (signInForm) signInForm.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const email = document.getElementById('si-email').value;
+    // TODO: integrate real auth; for now present success message
+    setCurrentUser?.(email);
+    modalBody.innerHTML = `<div class="modal-content"><h3>Welcome</h3><p>Signed in as ${email}.</p><div style="margin-top:12px"><button class="btn-block" id="closeAfter">Close</button></div></div>`;
+    document.getElementById('closeAfter').addEventListener('click', () => { closeModal(); renderAuthArea(); });
+  });
+
+  const signUpForm = document.getElementById('signUpForm');
+  if (signUpForm) signUpForm.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const email = document.getElementById('su-email').value;
+    setCurrentUser?.(email);
+    modalBody.innerHTML = `<div class="modal-content"><h3>Account Created</h3><p>Thanks — a confirmation was sent to ${email}.</p><div style="margin-top:12px"><button class="btn-block" id="closeAfter2">Close</button></div></div>`;
+    document.getElementById('closeAfter2').addEventListener('click', () => { closeModal(); renderAuthArea(); });
+  });
+
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) contactForm.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const name = document.getElementById('ct-name').value;
+    modalBody.innerHTML = `<div class="modal-content"><h3>Message Sent</h3><p>Thanks ${name}, we'll be in touch soon.</p><div style="margin-top:12px"><button class="btn-block" id="closeAfter3">Close</button></div></div>`;
+    document.getElementById('closeAfter3').addEventListener('click', closeModal);
+  });
+}
+
+// Optional: open contact modal when clicking contact anchor in nav with href="#contact-modal" (if present)
+document.querySelectorAll('a[href="#contact"]').forEach(a => a.addEventListener('click', (e) => { e.preventDefault(); openModal(contactHtml()); attachModalFormHandlers(); }));
+
+// ===== Preloader: show logo2 until window load (minimum display 3s) =====
+const preloader = document.getElementById('preloader');
+if (preloader) {
+  const preloaderStart = performance.now();
+  const MIN_MS = 3000; // minimum time to show preloader (3s)
+
+  function hidePreloader() {
+    preloader.classList.add('hidden');
+    setTimeout(() => { if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader); }, 500);
+  }
+
+  window.addEventListener('load', () => {
+    const elapsed = performance.now() - preloaderStart;
+    const remaining = Math.max(0, MIN_MS - elapsed);
+    if (remaining > 0) {
+      setTimeout(hidePreloader, remaining);
+    } else {
+      hidePreloader();
+    }
+  });
+
+  // Safety fallback: force hide after 8s regardless
+  setTimeout(() => { if (preloader && !preloader.classList.contains('hidden')) hidePreloader(); }, 8000);
+}
+
+// ===== Simple auth UI (demo) - localStorage backed =====
+const authArea = document.getElementById('authArea');
+const mobileAuthArea = document.getElementById('mobileAuthArea');
+
+function getCurrentUser() {
+  try { return localStorage.getItem('ecmi_user'); } catch (e) { return null; }
+}
+
+function setCurrentUser(email) {
+  try { localStorage.setItem('ecmi_user', email); } catch (e) {}
+}
+
+function clearCurrentUser() {
+  try { localStorage.removeItem('ecmi_user'); } catch (e) {}
+}
+
+function renderAuthArea() {
+  const user = getCurrentUser();
+  if (!authArea) return;
+  if (user) {
+    authArea.innerHTML = `<span style="font-weight:700;color:var(--primary);">${user.split('@')[0]}</span> <a href="#" id="logoutBtn" class="cta" style="margin-left:10px;background:transparent;color:var(--gold);border:2px solid var(--gold);">Logout</a>`;
+  } else {
+    // If modal is present, provide modal openers; otherwise fallback to signin.html
+    if (modalOverlay) {
+      authArea.innerHTML = `<a href="#" class="cta" id="openSignIn">Sign In</a> <a href="#" class="cta" id="openSignUp" style="margin-left:8px; background:transparent; border:2px solid var(--gold); color:var(--gold);">Sign Up</a>`;
+    } else {
+      authArea.innerHTML = `<a href="signin.html" class="cta">Sign In</a>`;
+    }
+  }
+  // mobile
+  if (mobileAuthArea) {
+    if (user) {
+      mobileAuthArea.innerHTML = `<a href="#" id="logoutBtnMobile" class="cta" style="background:transparent;color:var(--gold);border:2px solid var(--gold);">Logout</a>`;
+    } else if (modalOverlay) {
+      mobileAuthArea.innerHTML = `<a href="#" class="cta" id="openSignInMobile">Sign In</a>`;
+    } else {
+      mobileAuthArea.innerHTML = `<a href="signin.html" class="cta">Sign In</a>`;
+    }
+  }
+
+  // attach listeners
+  const logoutBtn = document.getElementById('logoutBtn');
+  const logoutBtnMobile = document.getElementById('logoutBtnMobile');
+  if (logoutBtn) logoutBtn.addEventListener('click', (e) => { e.preventDefault(); clearCurrentUser(); renderAuthArea(); });
+  if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', (e) => { e.preventDefault(); clearCurrentUser(); renderAuthArea(); if (mobileMenu) mobileMenu.style.display = 'none'; });
+
+  // re-bind sign in/up openers to work after html replacement
+  const openSignInNow = document.getElementById('openSignIn');
+  const openSignUpNow = document.getElementById('openSignUp');
+  const openSignInMobileNow = document.getElementById('openSignInMobile');
+  if (openSignInNow) openSignInNow.addEventListener('click', (e) => { e.preventDefault(); openModal(signInHtml()); attachModalFormHandlers(); });
+  if (openSignUpNow) openSignUpNow.addEventListener('click', (e) => { e.preventDefault(); openModal(signUpHtml()); attachModalFormHandlers(); });
+  if (openSignInMobileNow) openSignInMobileNow.addEventListener('click', (e) => { e.preventDefault(); openModal(signInHtml()); attachModalFormHandlers(); if (mobileMenu) mobileMenu.style.display = 'none'; });
+}
+
+// initialize auth area on load
+renderAuthArea();
+
 const mobileMenu = document.getElementById('mobileMenu');
 
 if (hamburger && mobileMenu) {

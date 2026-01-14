@@ -37,24 +37,33 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Preloader: shows logo2 immediately on open -->
+  <div id="preloader" class="preloader" aria-hidden="false">
+    <div class="preloader-inner">
+      <div class="logo-wrap">
+        <div class="preloader-ring" aria-hidden="true"></div>
+        <img src="assets/logo2.png" alt="Eternal City Ministries logo" class="preloader-logo">
+      </div>
+      <div class="preloader-text">Eternal City Ministries International</div>
+    </div>
+  </div>
   <!-- Header -->
   <header>
     <nav class="nav">
       <div class="brand">
-   <div class="brand">
-  <img src="assets/logo.png" alt="Eternal City Ministries Logo" class="logo-img">
-  <div></div>
-</div>
-
+        <img src="assets/logo.png" alt="Eternal City Ministries Logo" class="logo-img">
         <div>Eternal City Ministries International</div>
       </div>
-   <div class="nav-links">
+  <div class="nav-links">
   <a href="index.html">Home</a>
   <a href="index.html#about">About</a>
   <a href="program.html">Programs</a>
   <a href="Partner.html">Partner</a>
   <a href="Contact.html">Contact</a>
-  <a href="signin.html" class="cta">Sign In</a>
+  <span id="authArea">
+    <a href="#" class="cta" id="openSignIn">Sign In</a>
+    <a href="#" class="cta" id="openSignUp" style="margin-left:8px; background:transparent; border:2px solid var(--gold); color:var(--gold);">Sign Up</a>
+  </span>
   <a class="cta" href="index.html#newsletter">Subscribe</a>
 </div>
 
@@ -68,21 +77,21 @@
           <a href="program.html">Programs</a>
           <a href="#partner">Partner</a>
           <a href="#contact">Contact</a>
-          <a href="signin.html" class="cta">Sign In</a>
+          <span id="mobileAuthArea"><a href="#" class="cta" id="openSignInMobile">Sign In</a></span>
           <a class="cta" href="#newsletter">Subscribe</a>
   
-    </div>
+        </div>
   </header>
 
   <!-- Hero -->
   <section id="home" class="hero">
     <div class="slides">
-      <div class="slide active" style="background-image:url('assets/hero1.jpg');"></div>
-      <div class="slide" style="background-image:url('assets/hero2.jpg');"></div>
-      <div class="slide" style="background-image:url('assets/hero3.jpg');"></div>
-      <div class="slide" style="background-image:url('assets/hero4.jpg');"></div>
-      <div class="slide" style="background-image:url('assets/hero5.jpg');"></div>
-      <div class="slide" style="background-image:url('assets/hero6.jpg');"></div>
+      <div class="slide active"><img src="assets/hero1.jpg" alt="Eternal City Ministries" class="slide-img"></div>
+      <div class="slide"><img src="assets/hero2.jpg" alt="Worship" class="slide-img"></div>
+      <div class="slide"><img src="assets/hero3.jpg" alt="Outreach" class="slide-img"></div>
+      <div class="slide"><img src="assets/hero4.jpg" alt="Fellowship" class="slide-img"></div>
+      <div class="slide"><img src="assets/hero5.jpg" alt="Service" class="slide-img"></div>
+      <div class="slide"><img src="assets/hero6.jpg" alt="Ministry" class="slide-img"></div>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -214,6 +223,16 @@
       </div>
     </div>
   </footer>
+
+<!-- Modals: Sign In, Sign Up, Contact -->
+<div id="modalOverlay" class="modal-overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close modal">×</button>
+    <div id="modalBody">
+      <!-- dynamic content inserted by script -->
+    </div>
+  </div>
+</div>
 
   <script type="module" src="script.js"></script>
 </body>

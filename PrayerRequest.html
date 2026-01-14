@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prayer Request - Eternal City Ministries</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand">
+        <img src="assets/logo.png" alt="Logo" class="logo-img">
+        <div>Eternal City Ministries International</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="program.html">Programs</a>
+        <a href="Contact.html">Contact</a>
+        <a href="PrayerRequest.html" aria-current="page">Prayer Request</a>
+      </div>
+      <div class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="program.html">Programs</a>
+      <a href="Contact.html">Contact</a>
+      <a href="PrayerRequest.html">Prayer Request</a>
+    </div>
+  </header>
+
+  <section class="container" style="padding:70px 20px;">
+    <h1 class="section-title">Submit a Prayer Request</h1>
+    <p class="section-sub">Our prayer team will lift up your request with care and confidentiality.</p>
+
+    <div style="max-width:800px; margin:18px auto;">
+      <form id="prayerForm" class="auth-form active-form">
+        <div class="form-row">
+          <div class="form-group"><label for="pr-name">Name</label><input id="pr-name" name="name" required></div>
+          <div class="form-group"><label for="pr-phone">Phone</label><input id="pr-phone" name="phone"></div>
+        </div>
+        <div class="form-group"><label for="pr-email">Email</label><input id="pr-email" name="email" type="email"></div>
+        <div class="form-group"><label for="pr-subject">Subject</label><input id="pr-subject" name="subject"></div>
+        <div class="form-group"><label for="pr-message">Prayer Request</label><textarea id="pr-message" name="message" rows="8" placeholder="Share your request here" required></textarea></div>
+        <button class="btn-block" type="submit">Submit Prayer Request</button>
+        <div id="prResult" class="auth-message" style="display:none;margin-top:12px;" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links"><a href="index.html">Home</a><a href="index.html#about">About</a><a href="program.html">Programs</a></div>
+      <p class="footer-copy">© <span id="year"></span> Eternal City Ministries International</p>
+    </div>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+  <script>
+    const prayerForm = document.getElementById('prayerForm');
+    const prResult = document.getElementById('prResult');
+    if (prayerForm) {
+      prayerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('pr-name').value;
+        prResult.style.display = 'flex';
+        prResult.className = 'auth-message success';
+        prResult.textContent = `Thanks ${name}, your prayer request has been submitted (demo).`;
+        prayerForm.reset();
+      });
+    }
+  </script>
+</body>
+</html>

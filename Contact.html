@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact Eternal City Ministries</title>
@@ -19,31 +18,74 @@
         <a href="index.html">Home</a>
         <a href="index.html#about">About</a>
         <a href="partner.html">Partner</a>
-        <a href="contact.html">Contact</a>
+        <a href="Contact.html" aria-current="page">Contact</a>
       </div>
+      <div class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></div>
     </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="partner.html">Partner</a>
+      <a href="Contact.html">Contact</a>
+    </div>
   </header>
 
-  <section class="container" style="padding:70px 20px;">
-    <h2 class="section-title">Contact Us</h2>
-    <p class="section-sub">We’d love to connect with you.</p>
+  <!-- Hero -->
+  <section class="container" style="padding:40px 20px 24px;">
+    <div style="background:linear-gradient(135deg,#f7f8ff, #ffffff); border-radius:12px; padding:28px; display:flex; gap:20px; align-items:center;">
+      <div style="flex:1; min-width:180px;">
+        <h1 style="margin-bottom:6px; color:var(--primary);">Get in touch</h1>
+        <p style="margin:0; color:var(--muted);">We're here to serve. Send a message, partner with our outreach, or connect on social.</p>
+      </div>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <a class="btn-primary" href="#message">Send Message</a>
+        <a class="cta" href="#newsletter">Subscribe</a>
+      </div>
+    </div>
+  </section>
 
+  <!-- Contact Section -->
+  <section class="container" style="padding-top:8px;">
     <div class="contact-grid">
       <div class="contact-card">
-        <h3>Reach Us</h3>
-        <ul class="contact-list">
-          <li><strong>Phone/WhatsApp:</strong> +260 770452847</li>
-          <li><strong>Facebook:</strong> <a href="https://www.facebook.com/share/1MWtw7QaKL/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-          <li><strong>Instagram:</strong> <a href="https://www.instagram.com/eternal.city.ministries" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+        <h3>Contact Info</h3>
+        <p class="section-sub">Reach out to our team — we respond as soon as possible.</p>
+        <ul class="contact-list" style="margin-top:10px;">
+          <li><strong>Phone / WhatsApp:</strong> <a href="https://wa.me/260770452847" target="_blank" rel="noopener">+260 770 452 847</a></li>
+          <li><strong>Email:</strong> <a href="mailto:info@eternalcityministries.org">info@eternalcityministries.org</a></li>
+          <li><strong>Address:</strong> YMCA Libala, Lusaka, Zambia</li>
         </ul>
+
+        <div style="margin-top:18px;">
+          <h4 style="margin-bottom:8px; color:var(--primary);">Follow Us</h4>
+          <div class="socials">
+            <a href="https://www.facebook.com/share/1MWtw7QaKL/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="https://www.instagram.com/eternal.city.ministries" target="_blank" rel="noopener"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://wa.me/260770452847" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <h4 style="margin-bottom:8px; color:var(--primary);">Visit Us</h4>
+          <div style="border-radius:8px; overflow:hidden; border:1px solid #eee;">
+            <!-- Map centered on YMCA Libala -->
+            <iframe title="Map" src="https://www.google.com/maps?q=YMCA+Libala+Lusaka+Zambia&output=embed" style="width:100%; height:200px; border:0;" loading="lazy"></iframe>
+          </div>
+        </div>
       </div>
-      <div class="contact-card">
+
+      <div class="contact-card" id="message">
         <h3>Send a Message</h3>
-        <form>
-          <input type="text" placeholder="Your Name" required style="width:100%;padding:10px;margin-bottom:10px;">
-          <input type="email" placeholder="Your Email" required style="width:100%;padding:10px;margin-bottom:10px;">
-          <textarea placeholder="Your Message" required style="width:100%;padding:10px;margin-bottom:10px;"></textarea>
-          <button type="submit" class="cta">Send</button>
+        <form id="contactFormModern" class="auth-form active-form" style="margin-top:6px;">
+          <div class="form-row">
+            <div class="form-group"><label for="name">Name</label><input id="name" name="name" type="text" placeholder="Your full name" required></div>
+            <div class="form-group"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" placeholder="Phone or WhatsApp"></div>
+          </div>
+          <div class="form-group"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com" required></div>
+          <div class="form-group"><label for="subject">Subject</label><input id="subject" name="subject" placeholder="Subject"></div>
+          <div class="form-group"><label for="messageText">Message</label><textarea id="messageText" name="message" rows="6" placeholder="How can we help you?" required></textarea></div>
+          <button type="submit" class="btn-block">Send Message</button>
+          <div id="contactResult" class="auth-message" aria-live="polite" style="display:none;margin-top:12px;"></div>
         </form>
       </div>
     </div>
@@ -60,6 +102,22 @@
       <p class="footer-copy">© <span id="year"></span> Eternal City Ministries International</p>
     </div>
   </footer>
+
   <script type="module" src="script.js"></script>
+  <script>
+    // Simple contact form handler (demo)
+    const contactFormModern = document.getElementById('contactFormModern');
+    const contactResult = document.getElementById('contactResult');
+    if (contactFormModern) {
+      contactFormModern.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        contactResult.style.display = 'flex';
+        contactResult.className = 'auth-message success';
+        contactResult.textContent = `Thanks ${name}, your message was sent (demo).`;
+        contactFormModern.reset();
+      });
+    }
+  </script>
 </body>
 </html>
