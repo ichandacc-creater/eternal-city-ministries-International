@@ -57,6 +57,9 @@ header { background: var(--white); border-bottom: 1px solid #eee; position: stic
 .arrow.left { left: 16px; }
 .arrow.right { right: 16px; }
 
+/* Ensure arrows and controls sit above overlay */
+.arrow, .hero-controls { z-index: 3; }
+
 @media (max-width: 900px) {
   .hero h1 { font-size: 28px; }
   .hero p { font-size: 16px; }
@@ -435,9 +438,15 @@ footer { background: var(--black); color: var(--white); padding: 28px 20px; marg
 }
 
 /* On small screens make countdown flow below hero instead of absolutely covering it */
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .countdown { position: static; margin: 12px auto; min-width: auto; display: block; }
-  .hero { padding-bottom: 12px; }
+  .hero { padding-bottom: 12px; height: 55vh; min-height: 320px; }
+  .slide-img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+/* On large screens prefer contain so full image is visible (prevents cropping) */
+@media (min-width: 901px) {
+  .slide-img { width: auto; height: 100%; object-fit: contain; }
 }
 
 /* Preloader styles */
