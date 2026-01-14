@@ -44,7 +44,7 @@
         <div class="preloader-ring" aria-hidden="true"></div>
         <img src="assets/logo2.png" alt="Eternal City Ministries logo" class="preloader-logo">
       </div>
-      <div class="preloader-text">Eternal City Ministries International</div>
+      <div class="preloader-text">ECMI</div>
     </div>
   </div>
   <!-- Header -->
@@ -97,9 +97,6 @@
     <div class="hero-content">
       <h1>Transforming Nations Through Christ's Eternal Life</h1>
       <p>"Eternal City Ministries International exists to bring nations into the eternal life of Christ."</p>
-      <div class="buttons">
-        <a class="btn-primary" href="#partner">Partner with the Ministry</a>
-      </div>
     </div>
     
     <!-- Countdown (switchable between Eternal Experience and Sunday Service) - moved below hero -->
@@ -107,6 +104,10 @@
     <div class="arrow right" id="next">›</div>
     <div class="hero-controls" id="dots"></div>
   </section>
+  <!-- Partner CTA below hero -->
+  <div class="container" style="text-align:center; margin-top:18px;">
+    <a class="btn-primary" href="#partner" style="display:inline-block; padding:14px 22px; font-size:16px;">Partner with the Ministry</a>
+  </div>
 
   <!-- Countdown placed between hero and About -->
   <div id="eternal-countdown" class="countdown" aria-live="polite">
@@ -171,16 +172,17 @@
       <h3>Subscribe to Our Newsletter</h3>
       <p>Stay updated with events, teachings, and outreach.</p>
       <div class="embed">
-        <!-- Replace with Mailchimp embed form -->
-        <form action="YOUR_MAILCHIMP_FORM_ACTION_URL" method="post" target="_blank" novalidate>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <input type="email" name="EMAIL" placeholder="Enter your email" required
-                   style="flex:1; min-width:240px; padding:12px; border-radius:8px; border:none;">
-            <button type="submit"
+        <!-- Newsletter form: handled by Firebase via script.js -->
+        <form id="newsletterForm" novalidate>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <input type="email" name="EMAIL" placeholder="Enter your email" required aria-label="Email address"
+                   style="flex:1; min-width:200px; padding:12px; border-radius:8px; border:1px solid #ddd;">
+            <button type="submit" id="subscribeBtn"
                     style="background:#FFD700; color:#010088; border:none; padding:12px 18px; border-radius:8px; font-weight:700; cursor:pointer;">
               Subscribe
             </button>
           </div>
+          <div id="newsletterResult" style="margin-top:10px; display:none;"></div>
         </form>
       </div>
     </div>

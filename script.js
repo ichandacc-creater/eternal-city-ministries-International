@@ -260,6 +260,38 @@ if (slides.length && prev && next && dotsContainer) {
   startAuto();
 }
 
+// ===== Show transforming hero text only once on first slide (3s) =====
+(function() {
+  const heroContent = document.querySelector('.hero-content');
+  if (!heroContent) return;
+
+  // Ensure JS can reveal it; start hidden via CSS
+  let shown = false;
+
+  function showOnceFor3s() {
+    if (shown) return;
+    const activeSlide = document.querySelector('.slide.active');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const idx = slides.indexOf(activeSlide);
+    if (idx === 0) {
+      heroContent.classList.add('show');
+      shown = true;
+      setTimeout(() => { heroContent.classList.remove('show'); }, 9000);
+    }
+  }
+
+  // Try immediately (page load)
+  showOnceFor3s();
+
+  // Poll briefly in case slider initializes after this script runs
+  const poll = setInterval(() => {
+    if (shown) { clearInterval(poll); return; }
+    showOnceFor3s();
+  }, 300);
+  // Stop polling after 12 seconds
+  setTimeout(() => clearInterval(poll), 12000);
+})();
+
 // ===== Footer Year =====
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -388,6 +420,53 @@ if (countdownRoot) {
   setMode('eternal');
   startAutoSwitch();
   setInterval(updateCountdown, 1000);
+}
+
+// ===== Newsletter subscription (Firestore) =====
+import { getApp, getApps } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+let db = null;
+try {
+  if (getApps().length) {
+    db = getFirestore(getApp());
+  } else {
+    console.warn('Firebase app not initialized in page — newsletter will not work without initializing Firebase.');
+  }
+} catch (e) {
+  console.error('Error initializing Firestore:', e);
+}
+
+const newsletterForm = document.getElementById('newsletterForm');
+const newsletterResult = document.getElementById('newsletterResult');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const input = newsletterForm.querySelector('input[name="EMAIL"]');
+    const email = input && input.value && input.value.trim();
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      if (newsletterResult) { newsletterResult.style.display = 'block'; newsletterResult.className = 'auth-message error'; newsletterResult.textContent = 'Please enter a valid email.'; }
+      return;
+    }
+
+    if (!db) {
+      if (newsletterResult) { newsletterResult.style.display = 'block'; newsletterResult.className = 'auth-message error'; newsletterResult.textContent = 'Subscription temporarily unavailable.'; }
+      return;
+    }
+
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    subscribeBtn && (subscribeBtn.disabled = true);
+    try {
+      await addDoc(collection(db, 'newsletter_subscribers'), { email, createdAt: serverTimestamp(), source: 'website' });
+      if (newsletterResult) { newsletterResult.style.display = 'block'; newsletterResult.className = 'auth-message success'; newsletterResult.textContent = 'Thanks — you are subscribed.'; }
+      newsletterForm.reset();
+    } catch (err) {
+      console.error('Failed to add subscriber:', err);
+      if (newsletterResult) { newsletterResult.style.display = 'block'; newsletterResult.className = 'auth-message error'; newsletterResult.textContent = 'Subscription failed. Please try again later.'; }
+    } finally {
+      subscribeBtn && (subscribeBtn.disabled = false);
+    }
+  });
 }
 
 
