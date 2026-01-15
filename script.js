@@ -35,6 +35,7 @@ function signInHtml() {
         <div class="form-group"><label for="si-email">Email</label><input id="si-email" name="email" type="email" placeholder="you@example.com" required></div>
         <div class="form-group"><label for="si-pass">Password</label><input id="si-pass" name="password" type="password" placeholder="Password" required></div>
         <button class="btn-block" type="submit">Sign In</button>
+        <p class="auth-link"><a href="#" id="modalForgot">Forgot Password?</a></p>
         <div class="auth-link">Don't have an account? <a href="#" id="toSignUp">Create one</a></div>
       </form>
     </div>
@@ -85,8 +86,10 @@ function attachModalFormHandlers() {
   // wire delegated links inside modal
   const toSignUp = document.getElementById('toSignUp');
   const toSignIn = document.getElementById('toSignIn');
+  const modalForgot = document.getElementById('modalForgot');
   if (toSignUp) toSignUp.addEventListener('click', (ev) => { ev.preventDefault(); openModal(signUpHtml()); attachModalFormHandlers(); });
   if (toSignIn) toSignIn.addEventListener('click', (ev) => { ev.preventDefault(); openModal(signInHtml()); attachModalFormHandlers(); });
+  if (modalForgot) modalForgot.addEventListener('click', (ev) => { ev.preventDefault(); window.location.href = 'signin.html'; });
 
   const signInForm = document.getElementById('signInForm');
   if (signInForm) signInForm.addEventListener('submit', (ev) => {
@@ -116,8 +119,19 @@ function attachModalFormHandlers() {
   });
 }
 
-// Optional: open contact modal when clicking contact anchor in nav with href="#contact-modal" (if present)
-document.querySelectorAll('a[href="#contact"]').forEach(a => a.addEventListener('click', (e) => { e.preventDefault(); openModal(contactHtml()); attachModalFormHandlers(); }));
+// Handle contact anchors: open modal on desktop, navigate to full Contact page on mobile/touch
+document.querySelectorAll('a[href="#contact"]').forEach(a => a.addEventListener('click', (e) => {
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+  const isSmall = window.innerWidth <= 768;
+  if (isSmall || isTouch) {
+    e.preventDefault();
+    window.location.href = 'Contact.html';
+    return;
+  }
+  e.preventDefault();
+  openModal(contactHtml());
+  attachModalFormHandlers();
+}));
 
 // ===== Preloader: show logo2 until window load (minimum display 3s) =====
 const preloader = document.getElementById('preloader');
@@ -211,6 +225,14 @@ if (hamburger && mobileMenu) {
     mobileMenu.style.display = isOpen ? 'none' : 'flex';
     hamburger.setAttribute('aria-expanded', (!isOpen).toString());
   });
+}
+
+// Hide mobile menu after clicking any menu link (so it closes like when navigating to Programs)
+if (mobileMenu) {
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    try { mobileMenu.style.display = 'none'; } catch (e) {}
+    try { hamburger.setAttribute('aria-expanded', 'false'); } catch (e) {}
+  }));
 }
 
 // ===== Hero Slider (safe initialization) =====
@@ -398,6 +420,20 @@ if (countdownRoot) {
     if (elHours) elHours.textContent = pad(parts.hours);
     if (elMinutes) elMinutes.textContent = pad(parts.minutes);
     if (elSeconds) elSeconds.textContent = pad(parts.seconds);
+
+    // Add highlight pulse when a value changes (subtle animation)
+    try {
+      ['cd-months','cd-weeks','cd-days','cd-hours','cd-minutes','cd-seconds'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const parent = el.closest('.count-item');
+        if (!parent) return;
+        parent.classList.remove('highlight');
+        // reflow then add class to retrigger animation
+        void parent.offsetWidth;
+        parent.classList.add('highlight');
+      });
+    } catch (e) {}
   }
 
   // Auto-switch between modes every 4 seconds; restart when user interacts

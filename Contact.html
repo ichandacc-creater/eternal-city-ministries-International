@@ -45,15 +45,22 @@
   </section>
 
   <!-- Contact Section -->
-  <section class="container" style="padding-top:8px;">
+  <section class="contact-section container" style="padding-top:8px;">
     <div class="contact-grid">
-      <div class="contact-card">
+      <aside class="contact-card contact-info">
         <h3>Contact Info</h3>
-        <p class="section-sub">Reach out to our team — we respond as soon as possible.</p>
-        <ul class="contact-list" style="margin-top:10px;">
-          <li><strong>Phone / WhatsApp:</strong> <a href="https://wa.me/260770452847" target="_blank" rel="noopener">+260 770 452 847</a></li>
-          <li><strong>Email:</strong> <a href="mailto:info@eternalcityministries.org">info@eternalcityministries.org</a></li>
-          <li><strong>Address:</strong> YMCA Libala, Lusaka, Zambia</li>
+        <p class="section-sub">Reach out to our team — we typically respond within 24–48 hours.</p>
+
+        <ul class="contact-list" style="margin-top:12px;">
+          <li>
+            <strong>Phone</strong>
+            <div class="contact-actions">
+              <a class="phone-link" href="tel:+260770452847"><i class="fas fa-phone"></i> +260 770 452 847</a>
+              <a class="whatsapp-link" href="https://wa.me/260770452847" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+          </li>
+          <li><strong>Email</strong><div><a href="mailto:email.ecmi@gmail.com">email.ecmi@gmail.com</a></div></li>
+          <li><strong>Address</strong><div>YMCA Libala, Lusaka, Zambia</div></li>
         </ul>
 
         <div style="margin-top:18px;">
@@ -67,16 +74,15 @@
 
         <div style="margin-top:18px;">
           <h4 style="margin-bottom:8px; color:var(--primary);">Visit Us</h4>
-          <div style="border-radius:8px; overflow:hidden; border:1px solid #eee;">
-            <!-- Map centered on YMCA Libala -->
-            <iframe title="Map" src="https://www.google.com/maps?q=YMCA+Libala+Lusaka+Zambia&output=embed" style="width:100%; height:200px; border:0;" loading="lazy"></iframe>
+          <div class="map-wrap">
+            <iframe title="Map" src="https://www.google.com/maps?q=YMCA+Libala+Lusaka+Zambia&output=embed" loading="lazy"></iframe>
           </div>
         </div>
-      </div>
+      </aside>
 
-      <div class="contact-card" id="message">
+      <main class="contact-card form-card" id="message">
         <h3>Send a Message</h3>
-        <form id="contactFormModern" class="auth-form active-form" style="margin-top:6px;">
+        <form id="contactFormModern" class="auth-form active-form">
           <div class="form-row">
             <div class="form-group"><label for="name">Name</label><input id="name" name="name" type="text" placeholder="Your full name" required></div>
             <div class="form-group"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" placeholder="Phone or WhatsApp"></div>
@@ -87,7 +93,7 @@
           <button type="submit" class="btn-block">Send Message</button>
           <div id="contactResult" class="auth-message" aria-live="polite" style="display:none;margin-top:12px;"></div>
         </form>
-      </div>
+      </main>
     </div>
   </section>
 
