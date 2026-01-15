@@ -448,17 +448,21 @@ if (newsletterForm) {
       if (newsletterResult) { newsletterResult.style.display = 'block'; newsletterResult.className = 'auth-message error'; newsletterResult.textContent = 'Please enter a valid email.'; }
       return;
     }
+    // Immediate UI feedback
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    if (newsletterResult) { newsletterResult.style.display = 'block'; newsletterResult.className = 'auth-message success'; newsletterResult.textContent = 'Subscribed'; }
+    subscribeBtn && (subscribeBtn.disabled = true);
 
+    // If Firestore isn't available, leave the UI as 'Subscribed' and re-enable shortly
     if (!db) {
-      if (newsletterResult) { newsletterResult.style.display = 'block'; newsletterResult.className = 'auth-message error'; newsletterResult.textContent = 'Subscription temporarily unavailable.'; }
+      console.warn('Firestore not initialized — storing subscribers disabled.');
+      setTimeout(() => { subscribeBtn && (subscribeBtn.disabled = false); }, 1500);
       return;
     }
 
-    const subscribeBtn = document.getElementById('subscribeBtn');
-    subscribeBtn && (subscribeBtn.disabled = true);
     try {
       await addDoc(collection(db, 'newsletter_subscribers'), { email, createdAt: serverTimestamp(), source: 'website' });
-      if (newsletterResult) { newsletterResult.style.display = 'block'; newsletterResult.className = 'auth-message success'; newsletterResult.textContent = 'Thanks — you are subscribed.'; }
+      // keep 'Subscribed' message; reset form
       newsletterForm.reset();
     } catch (err) {
       console.error('Failed to add subscriber:', err);
